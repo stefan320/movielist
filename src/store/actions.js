@@ -118,7 +118,7 @@ export const filterMovieList = (
 
   // Then filter the matchedGenreMovies that matches the value of search field
   const filteredMovies = matchedGenreMovies.filter((movie) =>
-    movie.genre.toLowerCase().includes(queryString.toLowerCase())
+    movie.title.toLowerCase().includes(queryString.toLowerCase())
   );
 
   // Finaly sort the movies accordingly

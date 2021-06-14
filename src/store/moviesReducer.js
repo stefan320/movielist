@@ -37,7 +37,7 @@ const moviesReducer = (state = initialState, action) => {
     case actionTypes.SEARCH_CHANGED:
       return {
         ...state,
-        ...state.activeFilters,
+        activeFilters: [...state.activeFilters],
         displayedMovies: [...action.displayedMovies],
         searchFilterValue: action.searchFilterValue,
         filtersTouched: true,

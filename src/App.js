@@ -40,6 +40,8 @@ const App = (props) => {
   //     ))
   //   : null;
 
+  console.log(props);
+
   return (
     <PageContainer>
       <FilterMenu
