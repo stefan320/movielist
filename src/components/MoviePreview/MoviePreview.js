@@ -1,7 +1,7 @@
 import React from "react";
 
 const MoviePreview = (props) => {
-  console.log();
+  console.log(props);
   return (
     <div>
       <iframe

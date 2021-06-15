@@ -6,7 +6,7 @@ let allMovies = null;
 
 const sortMovies = (moviesArr, sortBy, order = "decending") => {
   //Recives an array and sort the items according to sortBy parameter
-  // IMPORTANT: SortBy value parameter should be The name of propery in the Array ie. title / rating
+  // IMPORTANT: SortBy parameter value should be the name of property in the Array ie. title / rating
   const sortedMovies = moviesArr.sort((a, b) => a[sortBy] - b[sortBy]);
   if (order === "decending") {
     return sortedMovies.reverse();
@@ -18,9 +18,9 @@ const sortMovies = (moviesArr, sortBy, order = "decending") => {
 const limitDisplayMovies = (movies, limit = 8) => movies.slice(0, limit);
 
 export const initMovieList = (dispatch, searchQuery) => {
-  const key = "$2b$10$QTMZaMPzjv.J7fnQLPoQSOCkpB4W5lZ/cp4zX/CqZR6l3LZ1LzT.G";
+  const key = "$2b$10$YPt0DssPKbZYiEJh7JiiDupPR9MyvsSAhCy9LYRUBH4cUKfPSvhNu";
   axios
-    .get("https://api.jsonbin.io/v3/b/6093c87065b36740b92f4838/4", {
+    .get("https://api.jsonbin.io/v3/b/60a269a4ad11ea05fe539ab2/3", {
       headers: {
         "X-Master-Key": key,
       },
@@ -32,7 +32,9 @@ export const initMovieList = (dispatch, searchQuery) => {
         // Parse query
         const queryParams = new URLSearchParams(searchQuery);
         const searchFilter = queryParams.get("searchFilter");
-        const genres = queryParams.get("genres").split(",");
+        const genres = queryParams.get("genres")
+          ? queryParams.get("genres").split(",")
+          : [];
         const order = queryParams.get("order");
 
         let movies = allMovies;
@@ -42,7 +44,7 @@ export const initMovieList = (dispatch, searchQuery) => {
           movie.title.toLowerCase().includes(searchFilter.toLowerCase())
         );
 
-        // Finaly sort the movies accordingly
+        // sort the movies accordingly
         movies = sortMovies(movies, order);
 
         dispatch(initPageWithQuery(movies, searchFilter, genres, order));

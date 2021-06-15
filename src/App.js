@@ -15,13 +15,13 @@ const PageContainer = styled.div`
 
 const App = (props) => {
   useEffect(() => {
-    props.onPageInit(props.history.location.search);
+    props.onPageInit(props.history.location.search.toString());
+    console.log(props.history.location.search.toString());
   }, []);
 
   useEffect(() => {
     // IF any of the filters / sorting changed update query params
     if (props.filtersTouched) {
-      console.log(props.searchFilter);
       const params = {
         searchFilter: props.searchFilter,
         genres: props.activeFilters,
@@ -32,45 +32,40 @@ const App = (props) => {
     }
   }, [props.searchFilter, props.activeFilters, props.sortByValue]);
 
-  // const movies = props.displayedMovies
-  //   ? props.displayedMovies.map((movie) => (
-  //       <Link to={"/preview"}>
-  //         <Movie key={uniqid()} movieInfo={movie} />
-  //       </Link>
-  //     ))
-  //   : null;
-
-  console.log(props);
-
   return (
     <PageContainer>
-      <FilterMenu
-        inputChangedHandler={(filterName) => {
-          props.filtersChanged(
-            filterName,
-            props.activeFilters,
-            props.searchFilter,
-            props.sortByValue
-          );
-        }}
-        searchChangedHandler={(search) => {
-          props.searchByString(search, props.activeFilters, props.sortByValue);
-        }}
-        selectMenuHandler={(value) => {
-          return props.sortBy(value, props.displayedMovies);
-        }}
-        sortByValue={props.sortByValue}
-        selectedGenres={props.activeFilters}
-        searchFilterValue={props.searchFilter}
-      />
       <Switch>
         <Route
-          path="/preview:trailerLink"
+          path="/preview:movieName"
           component={(props) => (
-            <MoviePreview videoUrl={props.history.location.trailer} />
+            <MoviePreview videoUrl={props.history.location.search} />
           )}
         />
         <Route path="/">
+          <FilterMenu
+            inputChangedHandler={(filterName) => {
+              props.filtersChanged(
+                filterName,
+                props.activeFilters,
+                props.searchFilter,
+                props.sortByValue
+              );
+            }}
+            searchChangedHandler={(search) => {
+              props.searchByString(
+                search,
+                props.activeFilters,
+                props.sortByValue
+              );
+            }}
+            selectMenuHandler={(value) => {
+              return props.sortBy(value, props.displayedMovies);
+            }}
+            sortByValue={props.sortByValue}
+            selectedGenres={props.activeFilters}
+            searchFilterValue={props.searchFilter}
+          />
+
           <Movies displayedMovies={props.displayedMovies} />
         </Route>
       </Switch>

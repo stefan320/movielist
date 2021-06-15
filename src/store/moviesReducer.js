@@ -18,13 +18,14 @@ const moviesReducer = (state = initialState, action) => {
       };
 
     case actionTypes.INIT_APP_WITH_QUERY:
-      console.log(action);
+      console.log(action.genres);
       return {
         ...state,
         displayedMovies: [...action.displayedMovies],
         searchFilterValue: action.searchFilter,
         sortBy: action.order,
         activeFilters: action.genres ? [...action.genres] : [],
+        filtersTouched: true,
       };
     case actionTypes.FILTER_CHANGED:
       return {

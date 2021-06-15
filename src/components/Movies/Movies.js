@@ -10,7 +10,7 @@ const Movies = (props) => (
           <Link
             to={{
               pathname: `preview:${movie.title}`,
-              trailer: movie.trailer,
+              search: movie.trailer,
             }}
             key={uniqid()}
           >
